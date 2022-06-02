@@ -1,3 +1,5 @@
+package com.activemq.demo;
+
 import org.apache.activemq.ActiveMQConnectionFactory;
 
 import javax.jms.*;
@@ -6,7 +8,7 @@ import javax.jms.*;
 * @author xbhfree
 * date:2022-05-25
 */
-public class Consumer {
+public class ConsumerDemo {
     public static void main(String[] args) throws JMSException {
         //创建工厂
         ActiveMQConnectionFactory factory = new ActiveMQConnectionFactory(ActiveMQConnectionFactory.DEFAULT_USER,
