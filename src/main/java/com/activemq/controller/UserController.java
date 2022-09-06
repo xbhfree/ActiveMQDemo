@@ -1,10 +1,12 @@
 package com.activemq.controller;
 
-import com.activemq.component.SendServer;
-import com.alibaba.fastjson.JSONObject;
+import com.activemq.service.ProducerService;
+import org.apache.activemq.command.ActiveMQQueue;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.jms.Destination;
 
 /**
 * @author xbhfree
@@ -13,15 +15,12 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class UserController {
     @Autowired
-    private SendServer sendServer;
+    private ProducerService service;
 
-    @RequestMapping("/register")
+    @GetMapping("/register")
     public String register(String name){
-        JSONObject jsonObject = new JSONObject();
-        jsonObject.put("type", "email");
-        jsonObject.put("to", "xbhfree@163.com");
-        jsonObject.put("content", "hello activemq");
-        sendServer.send(jsonObject.toJSONString());
+        Destination destination = new ActiveMQQueue("user.queue");
+        service.sendMessage(destination, name);
         return "register success";
     }
 }
